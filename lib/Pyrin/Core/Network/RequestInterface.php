@@ -1,6 +1,6 @@
 <?php
 
-namespace Pyrin\Core\Request\WebRequest;
+namespace Pyrin\Core\Network;
 
 /**
  *

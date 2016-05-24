@@ -1,8 +1,8 @@
 <?php
 
-namespace Pyrin\Core\Request;
+namespace Pyrin\Core\Network;
 
-use Pyrin\Core\Request\URLRequest;
+use Pyrin\Core\Network\URLRequest;
 
 class POSTRequest extends URLRequest {
   //put your code here

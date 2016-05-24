@@ -1,6 +1,6 @@
 <?php
 
-namespace Pyrin\Core\Request;
+namespace Pyrin\Core\Network;
 
 use Pyrin\Core\Variable\Data;
 
