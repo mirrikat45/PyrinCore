@@ -2,30 +2,59 @@
 
 namespace Pyrin\Core\Variable;
 
-use Pyrin\Core\Variable\Attribute;
-use Pyrin\Core\Variable\VariableInterface;
-
+use Pyrin\Core\Variable\DataInterface;
 class Data implements DataInterface {
+  private $data = array();
   
-  /**
-   * Add a new attribute to this data.
-   * @param string $property The name of the property to store a value in.
-   * @param mixed $value The value to store.
-   * @return \Pyrin\Core\Variable\Data
-   */
-  public function add($property, $value) {
-    $this->{$property} = new Attribute($value);
-    return $this;
+  public function __construct($arr = NULL) {
+    if ( $this->is_data($arr) ) {
+      $this->value($arr);
+    }
+  }
+  
+  private function is_data($variable) {
+    return is_array($variable) || is_a($variable, 'Pyrin\Core\Variable\Data');
   }
   
   /**
-   * Removes a property from this data.
-   * @param string $property The name of the property to remove.
+   * Set an attribute's value.
+   * @param string $name The name of the attribute.
+   * @param mixed $value The value of that attribute.
    * @return \Pyrin\Core\Variable\Data
    */
-  public function remove($property) {
-    unset($this->{$property});
-    return $this;
+  public function __set($name, $value) {
+    $this->data[$name] = $value;
+  }
+  
+  /**
+   * Remove's an attribute.
+   * @param type $name The name of the attribute.
+   */
+  public function __unset($name) {
+    unset($this->data[$name]);
+  }
+  
+  /**
+   * Determines if an attribute is set or not.
+   * @param type $name The name of the attribute.
+   */
+  public function __isset($name) {
+    return isset($this->data[$name]);
+  }
+  
+  /**
+   * Retreives an attribute's value.
+   * @param string $name The name of the attribute.
+   * @return mixed The attribute's value.
+   */
+  public function __get($name) {
+    if ( array_key_exists($name, $this->data) ) {
+      return $this->data[$name];
+    } else {
+      $trace = debug_backtrace();
+      //trigger_error('Access to undefined property via __get(): ' . $name . ' in ' . $trace[0]['file'] . ' on line ' . $trace[0]['line'], E_USER_NOTICE);
+      return null;
+    }
   }
   
   /**
@@ -33,33 +62,24 @@ class Data implements DataInterface {
    * @return array The array representing this data object.
    */
   public function getArray() {
-    $array = array();
-    foreach ( $this as $property => $value ) {
-      $array[$property] = $value->value();
+    return $this->data;
+  }
+  
+  /**
+   * Returns this Data Object as an array. Or sets an array value for this object.
+   * See: getArray();
+   */
+  public function value($arr = NULL) {
+    if ( is_array($arr) ) {
+      $this->data = array();
+      foreach ( $arr as $property => $value ) {
+        $this->data[$property] = $value;
+      }
+    } elseif ( $this->is_data($arr) ) {
+      foreach ( $arr->value() as $property => $value ) {
+        $this->data[$property] = $value;
+      }
     }
-    return $array;
+    return $this->getArray();
   }
-  
-  /**
-   * Returns this Data Object as a JSON object.
-   */
-  public function getJSON() {
-    return json_encode($this->getArray());
-  }
-  
-  /**
-   * Returns this Data Object as an XML object.
-   */
-  public function getXML() {
-    // TOD: Add this feature;
-  }
-  
-//  private function _convert_array($object) {
-//    $properties = is_object($object) ? $this->_convert_array($object) : $object;
-//    foreach ( $properties as $property => $value ) {
-//      $value = (is_array($value)) || is_object($value) ? $this->_convert_array($value) : $value;
-//      $properties[$property] = $value;
-//    }
-//    return $properties;
-//  }
 }

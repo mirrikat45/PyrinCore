@@ -7,9 +7,10 @@ namespace Pyrin\Core\Variable;
  * @author Mirrikat45
  */
 interface DataInterface {
-  public function add($variable, $value);
-  public function remove($variable);
+  public function __set($name, $value);
+  public function __get($name);
+  public function __unset($name);
+  public function __isset($name);
   public function getArray();
-  public function getJSON();
-  public function getXML();
+  public function value();
 }
