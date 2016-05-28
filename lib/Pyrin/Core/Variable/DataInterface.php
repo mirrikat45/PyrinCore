@@ -12,5 +12,5 @@ interface DataInterface {
   public function __unset($name);
   public function __isset($name);
   public function getArray();
-  public function value();
+  public function length();
 }

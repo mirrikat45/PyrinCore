@@ -43,11 +43,20 @@ class Data implements DataInterface {
   }
   
   /**
+   * Gets the length of this data's properties.
+   * @return int The number of attributes contained within this data object.
+   */
+  public function length() {
+    return count($this->data);
+  }
+  
+  /**
    * Retreives an attribute's value.
    * @param string $name The name of the attribute.
    * @return mixed The attribute's value.
    */
   public function __get($name) {
+    // Add support for .length
     if ( array_key_exists($name, $this->data) ) {
       return $this->data[$name];
     } else {
@@ -63,6 +72,10 @@ class Data implements DataInterface {
    */
   public function getArray() {
     return $this->data;
+  }
+  
+  public function getJSON() {
+    return json_encode($this->getArray());
   }
   
   /**
@@ -81,5 +94,18 @@ class Data implements DataInterface {
       }
     }
     return $this->getArray();
+  }
+  
+  /**
+   * Merge Values into this Data Object
+   * @param type $arr
+   */
+  public function merge($arr = array(), $overwrite = false) {
+    if ( $overwrite === TRUE ) {
+      $this->data = array_merge($this->data, $arr);
+    } else {
+      $this->data = array_merge($arr, $this->data);
+    }
+    return $this;
   }
 }

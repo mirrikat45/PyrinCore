@@ -35,7 +35,7 @@
  * @author Kris Wallsmith <kris.wallsmith@gmail.com>
  * @author Fabien Potencier <fabien.potencier@symfony-project.org>
  */
-class SplClassLoader
+class PyrinAutoLoader
 {
     private $_fileExtension = '.php';
     private $_namespace;
