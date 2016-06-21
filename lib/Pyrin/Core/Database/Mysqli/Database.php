@@ -14,6 +14,7 @@ class Database implements DatabaseInterface {
   protected $host = 'localhost';
   protected $port = 3306;
   protected $socket = NULL;
+  protected $logger;
   
   private function __clone() {}
   private function __wakeup() {}
@@ -43,5 +44,11 @@ class Database implements DatabaseInterface {
     
   }
   
-
+  public function log($message, $type, $level = LOG_INFO, $variables = array()) {
+    if ( isset($this->logger) ) {
+       $query = 'INSERT INTO ' . $this->logger . ' (level, message, type, variables)' .
+                'VALUES (' . $level . ', \'' . $message . '\', \'' . $type . '\', \'' . serialize($variables) . '\')';
+       $this->query($query);
+    }
+  }
 }

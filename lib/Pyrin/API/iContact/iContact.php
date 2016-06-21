@@ -22,7 +22,9 @@ class iContact {
   }
   
   public function request($uri, $method) {
-    $url = $this->ApiURL->getString() . $uri;
+    $url = $this->ApiURL->getString();
+    $url .= $uri;
+    print_r($url);
     $request = new iContactRequest($url, $method, FALSE);
     $request->addHeader('Accept', 'application/json')
         ->addHeader('Content-Type', 'application/json')

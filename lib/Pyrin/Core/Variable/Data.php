@@ -83,6 +83,9 @@ class Data implements DataInterface {
    * See: getArray();
    */
   public function value($arr = NULL) {
+    
+    
+    
     if ( is_array($arr) ) {
       $this->data = array();
       foreach ( $arr as $property => $value ) {
@@ -93,7 +96,8 @@ class Data implements DataInterface {
         $this->data[$property] = $value;
       }
     }
-    return $this->getArray();
+    
+    return $this->data;
   }
   
   /**

@@ -8,6 +8,7 @@ class iContactRequest extends URLRequest {
 
   public function getContact($index = 0) {
     $results = $this->getJSON();
+    print_r($results);
     if ( !empty($results->contacts) && array_key_exists($index, $results->contacts) ) {
       return (array)$results->contacts[$index];
     } else {

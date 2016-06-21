@@ -26,7 +26,7 @@ class Url extends \Pyrin\Core\Variable\Data {
     $port = $this->port;
     $path = $this->path;
     $query_array = $this->query->getArray();
-    $query = isset($query_array) ? ('?' . http_build_query($this->query->getArray())) : '';
+    $query = !empty($query_array) ? ('?' . http_build_query($this->query->getArray())) : '';
     $fragment = !empty($this->fragment) ? '#' . $this->fragment : '';
     return sprintf('%s://%s%s%s%s%s', $scheme, $auth, $host, $port, $path, $query, $fragment);
   }

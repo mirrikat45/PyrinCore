@@ -21,6 +21,7 @@ class Contact extends Data {
       $request->addData('email', $this->email);
       $this->merge($request->getContact(), $overwrite);
     }
+    
     return $this;
   }
   

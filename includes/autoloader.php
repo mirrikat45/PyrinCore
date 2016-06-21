@@ -136,8 +136,16 @@ class PyrinAutoLoader
                 $className = substr($className, $lastNsPos + 1);
                 $fileName = str_replace($this->_namespaceSeparator, DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
             }
-            $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . $this->_fileExtension;
-            require ($this->_includePath !== null ? $this->_includePath . DIRECTORY_SEPARATOR : '') . $fileName;
+            //$fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . $this->_fileExtension;
+            //print_r($fileName);
+            $fileName .= $className . $this->_fileExtension;
+            try {
+              include ($this->_includePath !== null ? $this->_includePath . DIRECTORY_SEPARATOR : '') . $fileName;
+            } catch (Exception $ex) {
+              var_dump($ex);
+              var_dump(debug_backtrace());
+            }
+            
         }
     }
 }
